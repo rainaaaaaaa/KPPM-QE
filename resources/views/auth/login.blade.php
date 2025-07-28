@@ -1,7 +1,8 @@
 <x-guest-layout>
+
     <div class="flex flex-col items-center mb-6">
-        <img src="/logo-telkom.svg" alt="Telkom Indonesia" class="w-16 h-16 mb-2">
-        <span class="text-4xl font-bold text-primary">Smart PED</span>
+        <img src="/images.png" alt="Telkom Indonesia" class="w-16 h-16 mb-2">
+        <span class="text-2xl font-bold text-primary">Smart PED</span>
     </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -43,9 +44,24 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3 bg-primary hover:bg-primary-dark focus:bg-primary-dark">
+            <x-primary-button class="ms-3 btn-register">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Register Section -->
+    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                {{ __('Belum punya akun?') }}
+            </p>
+            @if (Route::has('register'))
+                <a href="{{ route('register') }}" 
+                   class="btn-register inline-flex items-center px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25">
+                    {{ __('Daftar Akun Baru') }}
+                </a>
+            @endif
+        </div>
+    </div>
 </x-guest-layout>

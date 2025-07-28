@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class HemDocument extends Model
+class QeDocument extends Model
 {
     protected $fillable = [
         'nama_dokumen',

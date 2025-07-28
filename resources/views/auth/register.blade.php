@@ -1,7 +1,8 @@
 <x-guest-layout>
+
     <div class="flex flex-col items-center mb-6">
-        <img src="/logo-telkom.svg" alt="Telkom Indonesia" class="w-16 h-16 mb-2">
-        <span class="text-4xl font-bold text-primary">Smart PED</span>
+        <img src="/images.png" alt="Telkom Indonesia" class="w-16 h-16 mb-2">
+        <span class="text-2xl font-bold text-primary">Smart PED</span>
     </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -44,13 +45,22 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-primary hover:text-primary-dark rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4 bg-primary hover:bg-primary-dark focus:bg-primary-dark">
+            <x-primary-button class="btn-register">
                 {{ __('Register') }}
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Login Section -->
+    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div class="text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                {{ __('Sudah punya akun?') }}
+            </p>
+            <a href="{{ route('login') }}" 
+               class="btn-login inline-flex items-center px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25">
+                {{ __('Masuk ke Akun') }}
+            </a>
+        </div>
+    </div>
 </x-guest-layout>

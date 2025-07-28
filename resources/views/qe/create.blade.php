@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-xl mx-auto mt-8 bg-white p-6 rounded shadow">
-    <h2 class="text-2xl font-bold mb-4 text-red-600">Upload Dokumen HEM</h2>
+    <h2 class="text-2xl font-bold mb-4 text-red-600">Upload Dokumen QE</h2>
     @if ($errors->any())
         <div class="mb-4 text-red-600">
             <ul>
@@ -12,7 +12,7 @@
             </ul>
         </div>
     @endif
-    <form method="POST" action="{{ route('hem.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('qe.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
             <label class="block mb-1 font-semibold text-gray-700">Nama Dokumen</label>

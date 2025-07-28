@@ -5,8 +5,9 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('logo-telkom.svg') }}" alt="Telkom Logo" class="h-10 w-auto mr-3" />
+                    <a href="{{ route('dashboard') }}" class="flex items-center">
+                        <img src="{{ asset('images.png') }}" alt="Telkom Logo" class="h-10 w-auto mr-3" />
+                        <span class="text-white font-bold text-lg">Smart PED</span>
                     </a>
                 </div>
 
@@ -18,7 +19,7 @@
                     <x-nav-link :href="route('hem.index')" :active="request()->routeIs('hem.*')">
                         HEM
                     </x-nav-link>
-                    <x-nav-link href="#">
+                    <x-nav-link :href="route('qe.index')" :active="request()->routeIs('qe.*')">
                         QE
                     </x-nav-link>
                     <x-nav-link href="#">
@@ -82,7 +83,7 @@
             <x-responsive-nav-link :href="route('hem.index')" :active="request()->routeIs('hem.*')">
                 HEM
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="#">
+            <x-responsive-nav-link :href="route('qe.index')" :active="request()->routeIs('qe.*')">
                 QE
             </x-responsive-nav-link>
             <x-responsive-nav-link href="#">

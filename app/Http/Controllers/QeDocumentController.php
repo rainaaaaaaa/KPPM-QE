@@ -4,24 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HemDocumentController extends Controller
+class QeDocumentController extends Controller
 {
     public function index(\Illuminate\Http\Request $request)
     {
-        $lokasiList = \App\Models\HemDocument::select('lokasi')->distinct()->pluck('lokasi');
-        $query = \App\Models\HemDocument::query();
+        $lokasiList = \App\Models\QeDocument::select('lokasi')->distinct()->pluck('lokasi');
+        $query = \App\Models\QeDocument::query();
         if ($request->filled('lokasi')) {
             $query->where('lokasi', $request->lokasi);
         }
         $documents = $query->orderBy('created_at', 'desc')->get();
-        return view('hem.index', compact('documents', 'lokasiList'));
+        return view('qe.index', compact('documents', 'lokasiList'));
     }
 
     public function create()
     {
         // Ambil lokasi unik dari dokumen yang sudah ada untuk dropdown
-        $lokasiList = \App\Models\HemDocument::select('lokasi')->distinct()->pluck('lokasi');
-        return view('hem.create', compact('lokasiList'));
+        $lokasiList = \App\Models\QeDocument::select('lokasi')->distinct()->pluck('lokasi');
+        return view('qe.create', compact('lokasiList'));
     }
 
     public function store(\Illuminate\Http\Request $request)
@@ -40,9 +40,9 @@ class HemDocumentController extends Controller
             return back()->withErrors(['lokasi' => 'Lokasi harus diisi. Pilih dari dropdown atau ketik lokasi baru.'])->withInput();
         }
 
-        $filePath = $request->file('file')->store('hem_documents', 'public');
+        $filePath = $request->file('file')->store('qe_documents', 'public');
 
-        $doc = new \App\Models\HemDocument();
+        $doc = new \App\Models\QeDocument();
         $doc->nama_dokumen = $request->nama_dokumen;
         $doc->lokasi = $lokasi;
         $doc->file_path = $filePath;
@@ -50,6 +50,6 @@ class HemDocumentController extends Controller
         $doc->user_id = auth()->id();
         $doc->save();
 
-        return redirect()->route('hem.index')->with('success', 'Dokumen berhasil diupload!');
+        return redirect()->route('qe.index')->with('success', 'Dokumen berhasil diupload!');
     }
 }
