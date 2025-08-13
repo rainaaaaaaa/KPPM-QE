@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qe_documents', function (Blueprint $table) {
+        Schema::create('mtra_photos', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_dokumen');
-            $table->string('lokasi');
-            $table->string('file_path');
-            $table->text('keterangan')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mtra_project_id')->constrained()->onDelete('cascade');
+            $table->string('photo_path');
+            $table->string('caption')->nullable();
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qe_documents');
+        Schema::dropIfExists('mtra_photos');
     }
-};
+}; 

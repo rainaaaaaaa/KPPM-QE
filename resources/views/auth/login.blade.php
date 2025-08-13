@@ -2,7 +2,7 @@
 
     <div class="flex flex-col items-center mb-6">
         <img src="/images.png" alt="Telkom Indonesia" class="w-16 h-16 mb-2">
-        <span class="text-2xl font-bold text-primary">Smart PED</span>
+        <span class="text-2xl font-bold text-primary">QE Deployment</span>
     </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

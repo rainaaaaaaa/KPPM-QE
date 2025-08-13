@@ -30,12 +30,12 @@ nav, .navbar-telkom {
   color: var(--primary) !important;
 }
 
-/* Efek glow card utama HEM */
-.hem-glow {
+/* Efek glow card utama QE */
+.qe-glow {
     box-shadow: 0 0 32px 0 rgba(255,0,0,0.10), 0 12px 40px 0 rgba(60,60,60,0.18);
     transition: box-shadow 0.3s, transform 0.3s;
 }
-.hem-glow:hover {
+.qe-glow:hover {
     box-shadow: 0 0 64px 0 rgba(255,0,0,0.18), 0 24px 60px 0 rgba(60,60,60,0.22);
     transform: scale(1.025);
 }

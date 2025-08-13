@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hem_documents', function (Blueprint $table) {
+        Schema::create('mtra_projects', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_dokumen');
+            $table->string('nomor_kontrak');
             $table->string('lokasi');
-            $table->string('file_path');
+            $table->enum('jenis', ['recovery', 'preventif', 'relokasi']);
+            $table->string('foto_path')->nullable();
             $table->text('keterangan')->nullable();
+            $table->enum('status', ['planning', 'berjalan', 'selesai'])->default('planning');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hem_documents');
+        Schema::dropIfExists('mtra_projects');
     }
 };

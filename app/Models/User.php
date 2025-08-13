@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -42,7 +43,32 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'updated_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if user is a partner
+     */
+    public function isPartner(): bool
+    {
+        return $this->role === 'partner';
+    }
+
+    /**
+     * Check if user is a regular user
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
+    /**
+     * Check if user is a ped
+     */
+    public function isPed(): bool
+    {
+        return $this->role === 'ped';
     }
 }
