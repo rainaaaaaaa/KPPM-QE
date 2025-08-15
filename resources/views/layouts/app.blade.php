@@ -17,6 +17,23 @@
         <!-- Alpine.js -->
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         
+        <!-- CSRF Token Setup -->
+        <script>
+            // Ensure CSRF token is available for all AJAX requests
+            window.Laravel = {!! json_encode([
+                'csrfToken' => csrf_token(),
+            ]) !!};
+            
+            // Set up axios CSRF token
+            if (window.axios) {
+                window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
+            }
+            
+            // Debug CSRF token
+            console.log('CSRF Token:', window.Laravel.csrfToken);
+            console.log('Meta CSRF Token:', document.head.querySelector('meta[name="csrf-token"]')?.content);
+        </script>
+        
         <style>
             .sidebar {
                 transition: transform 0.3s ease-in-out;

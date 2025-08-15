@@ -39,70 +39,164 @@
                 <h1 class="text-2xl font-bold text-gray-900">Project Mitra</h1>
                 <p class="text-gray-600 mt-1">Kelola semua project Mitra Anda</p>
             </div>
-            <a href="{{ route('mtra.create') }}" 
-               class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg hover:from-red-700 hover:to-red-600 transition-all duration-200 shadow-sm">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                Tambah Project
-            </a>
+            <div class="flex items-center space-x-4">
+                <!-- CSRF Test Button -->
+                <button onclick="testCsrf()" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Test CSRF
+                </button>
+                <a href="{{ route('mtra.create') }}" 
+                   class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg hover:from-red-700 hover:to-red-600 transition-all duration-200 shadow-sm">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Tambah Project
+                </a>
+            </div>
         </div>
     </div>
 
+    <!-- CSRF Test Script -->
+    <script>
+        function testCsrf() {
+            // Test GET request
+            fetch('/test-csrf')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('CSRF Test GET:', data);
+                    alert('CSRF Token: ' + data.csrf_token.substring(0, 20) + '...');
+                })
+                .catch(error => {
+                    console.error('CSRF Test GET Error:', error);
+                    alert('CSRF Test GET failed: ' + error.message);
+                });
+
+            // Test POST request
+            const token = document.head.querySelector('meta[name="csrf-token"]').content;
+            fetch('/test-csrf-post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('CSRF Test POST:', data);
+                alert('CSRF POST Test successful!');
+            })
+            .catch(error => {
+                console.error('CSRF Test POST Error:', error);
+                alert('CSRF Test POST failed: ' + error.message);
+            });
+        }
+    </script>
+
     <!-- Statistics -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div class="flex items-center">
+    <style>
+        .stats-card {
+            height: 100px !important;
+            max-height: 100px !important;
+            min-height: 100px !important;
+            display: flex !important;
+            align-items: center !important;
+            background: white !important;
+            border-radius: 8px !important;
+            border: 1px solid #e5e7eb !important;
+            padding: 16px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            overflow: hidden !important;
+            position: relative !important;
+            box-sizing: border-box !important;
+            transform: none !important;
+            line-height: 1 !important;
+        }
+        .stats-container {
+            display: flex !important;
+            gap: 16px !important;
+            margin-bottom: 32px !important;
+            align-items: stretch !important;
+            height: 100px !important;
+            line-height: 1 !important;
+        }
+        .stats-item {
+            flex: 1 !important;
+            display: flex !important;
+            height: 100px !important;
+            line-height: 1 !important;
+        }
+        .stats-card * {
+            max-height: none !important;
+            line-height: 1 !important;
+        }
+        .stats-card > div {
+            height: auto !important;
+            max-height: none !important;
+            line-height: 1 !important;
+        }
+        .stats-card p {
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+        }
+    </style>
+    
+    <div class="stats-container">
+        <div class="stats-item">
+            <div class="stats-card">
                 <div class="w-10 h-10 bg-gradient-to-br from-red-100 to-red-50 rounded-lg flex items-center justify-center">
                     <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-600">Total</p>
+                    <p class="text-sm font-medium text-gray-600">Total Proyek</p>
                     <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->count() }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div class="flex items-center">
-                <div class="w-10 h-10 bg-gradient-to-br from-green-100 to-green-50 rounded-lg flex items-center justify-center">
-                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-600">Recovery</p>
-                    <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->where('jenis', 'recovery')->count() }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div class="flex items-center">
+        <div class="stats-item">
+            <div class="stats-card">
                 <div class="w-10 h-10 bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-lg flex items-center justify-center">
                     <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-600">Preventif</p>
-                    <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->where('jenis', 'preventif')->count() }}</p>
+                    <p class="text-sm font-medium text-gray-600">Menunggu Review</p>
+                    <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->where('ped_approved', null)->count() }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div class="flex items-center">
-                <div class="w-10 h-10 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg flex items-center justify-center">
-                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+        <div class="stats-item">
+            <div class="stats-card">
+                <div class="w-10 h-10 bg-gradient-to-br from-green-100 to-green-50 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-600">Relokasi</p>
-                    <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->where('jenis', 'relokasi')->count() }}</p>
+                    <p class="text-sm font-medium text-gray-600">Disetujui</p>
+                    <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->where('ped_approved', true)->count() }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-item">
+            <div class="stats-card">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-100 to-red-50 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-600">Ditolak</p>
+                    <p class="text-lg font-semibold text-gray-900">{{ $mtraProjects->where('ped_approved', false)->count() }}</p>
                 </div>
             </div>
         </div>

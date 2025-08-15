@@ -10,14 +10,24 @@
                 <p class="text-gray-600">Review dan kelola dokumen proyek</p>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="{{ route('ped.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">
+                <a href="{{ route('ped.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
                     Kembali ke Daftar
                 </a>
-                <a href="{{ route('ped.dashboard') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                <a href="{{ route('ped.dashboard') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"/>
+                    </svg>
                     Dashboard
                 </a>
-                <button onclick="location.reload()" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 transition-colors">
-                    🔄 Refresh
+                <button onclick="location.reload()" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Refresh
                 </button>
             </div>
         </div>
@@ -160,12 +170,9 @@
                     
                     <!-- Approval Buttons -->
                     <div class="space-y-4">
-                        <!-- Debug Info -->
-                        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
-                            <strong>Debug:</strong> Status proyek: {{ $project->ped_approved === null ? 'Menunggu Review' : ($project->ped_approved ? 'Disetujui' : 'Ditolak') }}
-                            <br><strong>Project ID:</strong> {{ $project->id }}
-                            <br><strong>Raw Value:</strong> {{ var_export($project->ped_approved, true) }}
-                            <br><strong>Last Updated:</strong> {{ $project->updated_at }}
+                        <div class="text-center mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1">Review Proyek</h3>
+                            <p class="text-sm text-gray-600">Pilih tindakan untuk proyek ini</p>
                         </div>
                         
                         <!-- Approve Button -->
@@ -173,13 +180,15 @@
                             @csrf
                             <textarea name="ped_notes" style="display: none;">{{ request('ped_notes', '') }}</textarea>
                             <button type="submit" 
-                                    class="w-full px-6 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-lg shadow-md border-0"
-                                    style="background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important; color: white !important; font-size: 18px !important; font-weight: bold !important; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3) !important;"
-                                    onclick="this.form.querySelector('textarea[name=ped_notes]').value = document.getElementById('ped_notes').value;">
-                                <svg class="w-6 h-6 mr-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                                ✅ SETUJUI PROYEK (ALT ROUTE)
+                                    class="group w-full px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg border-0 transform hover:scale-102 focus:outline-none focus:ring-2 focus:ring-green-300 relative overflow-hidden"
+                                    onclick="this.form.querySelector('textarea[name=ped_notes]').value = document.getElementById('ped_notes').value; this.disabled=true; this.innerHTML='<div class=\'flex items-center justify-center\'><svg class=\'animate-spin w-5 h-5 mr-2\' fill=\'none\' viewBox=\'0 0 24 24\'><circle class=\'opacity-25\' cx=\'12\' cy=\'12\' r=\'10\' stroke=\'currentColor\' stroke-width=\'4\'></circle><path class=\'opacity-75\' fill=\'currentColor\' d=\'M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z\'></path></svg>Memproses...</div>';">
+                                <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                                <div class="flex items-center justify-center relative z-10">
+                                    <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span class="text-base">Setujui Proyek</span>
+                                </div>
                             </button>
                         </form>
                         
@@ -188,13 +197,15 @@
                             @csrf
                             <textarea name="ped_notes" style="display: none;">{{ request('ped_notes', '') }}</textarea>
                             <button type="submit" 
-                                    class="w-full px-6 py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold text-lg shadow-md border-0"
-                                    style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important; color: white !important; font-size: 18px !important; font-weight: bold !important; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3) !important;"
-                                    onclick="this.form.querySelector('textarea[name=ped_notes]').value = document.getElementById('ped_notes').value; return confirm('Apakah Anda yakin ingin menolak proyek ini?')">
-                                <svg class="w-6 h-6 mr-3 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                                ❌ TOLAK PROYEK (ALT ROUTE)
+                                    class="group w-full px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg border-0 transform hover:scale-102 focus:outline-none focus:ring-2 focus:ring-red-300 relative overflow-hidden"
+                                    onclick="if(confirm('Apakah Anda yakin ingin menolak proyek ini?')) { this.form.querySelector('textarea[name=ped_notes]').value = document.getElementById('ped_notes').value; this.disabled=true; this.innerHTML='<div class=\'flex items-center justify-center\'><svg class=\'animate-spin w-5 h-5 mr-2\' fill=\'none\' viewBox=\'0 0 24 24\'><circle class=\'opacity-25\' cx=\'12\' cy=\'12\' r=\'10\' stroke=\'currentColor\' stroke-width=\'4\'></circle><path class=\'opacity-75\' fill=\'currentColor\' d=\'M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z\'></path></svg>Memproses...</div>'; } else { return false; }">
+                                <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-red-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                                <div class="flex items-center justify-center relative z-10">
+                                    <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    <span class="text-base">Tolak Proyek</span>
+                                </div>
                             </button>
                         </form>
                     </div>

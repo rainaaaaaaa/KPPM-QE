@@ -20,6 +20,23 @@ Route::get('/test', [App\Http\Controllers\TestController::class, 'testProject'])
 // Test route untuk mtra/7 tanpa auth
 Route::get('/test-mtra/{id}', [App\Http\Controllers\MtraProjectController::class, 'show']);
 
+// Test CSRF token route
+Route::get('/test-csrf', function() {
+    return response()->json([
+        'csrf_token' => csrf_token(),
+        'session_id' => session()->getId(),
+        'message' => 'CSRF token is working'
+    ]);
+});
+
+// Test POST route to verify CSRF protection
+Route::post('/test-csrf-post', function() {
+    return response()->json([
+        'message' => 'CSRF token is working for POST requests',
+        'session_id' => session()->getId()
+    ]);
+});
+
 // Debug route untuk test approval
 Route::get('/debug-approve/{id}', function($id) {
     $project = App\Models\MtraProject::find($id);
